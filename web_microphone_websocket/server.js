@@ -3,7 +3,7 @@ const socketIO = require('socket.io');
 const STT = require('stt');
 const VAD = require('node-vad');
 
-let STT_MODEL = __dirname + '/coqui-stt-models'; // path to stt english model directory
+let STT_MODEL = __dirname + '/id-ID.v30'; // path to stt english model directory
 
 let SILENCE_THRESHOLD = 200; // how many milliseconds of inactivity before processing the audio
 
@@ -16,14 +16,14 @@ const VAD_MODE = VAD.Mode.VERY_AGGRESSIVE;
 const vad = new VAD(VAD_MODE);
 
 function createModel(modelDir) {
-	let modelPath = modelDir + '.tflite';
+	let modelPath = modelDir + '.model';
 	let scorerPath = modelDir + '.scorer';
 	let model = new STT.Model(modelPath);
 	model.enableExternalScorer(scorerPath);
 	return model;
 }
 
-let englishModel = createModel(STT_MODEL);
+let idModel = createModel(STT_MODEL);
 
 let modelStream;
 let recordedChunks = 0;
@@ -148,7 +148,7 @@ function processVoice(data) {
 }
 
 function createStream() {
-	modelStream = englishModel.createStream();
+	modelStream = idModel.createStream();
 	recordedChunks = 0;
 	recordedAudioLength = 0;
 }
